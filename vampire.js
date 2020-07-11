@@ -51,7 +51,36 @@ class Vampire {
       return vampire;
     }
   }
+    /** Tree traversal methods **/
 
+  // Returns the vampire object with that name, or null if no vampire exists with that name
+  vampireWithName(name) {
+    if (this.name === name) {
+      return this.vampire;
+    }
+    for (const offspringNode of this.offspring) {
+      offspringNode.vampireWithName(name);
+    }
+  }
+
+  // Returns the total number of vampires that exist
+  get totalDescendents() {
+    
+  }
+
+  // Returns an array of all the vampires that were converted after 1980
+  get allMillennialVampires() {
+    let millennials = [];
+
+    if (this.yearConverted > 1980) {
+      millennial.push(this);
+    }
+    for (const offspringNode of this.addOffspring) {
+      const millennialAfter = offspringNode.allMillennialVampires(); 
+      millennials = millennials.concat(millennialAfter);
+    }
+    return millennials;
+  }
 }
 
 module.exports = Vampire;
