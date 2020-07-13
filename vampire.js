@@ -37,24 +37,7 @@ class Vampire {
     return (this.numberOfVampiresFromOriginal < vampire.numberOfVampiresFromOriginal);    
   }
 
-  /** Tree traversal methods **/
-
-  // Returns the vampire object with that name, or null if no vampire exists with that name
-  vampireWithName(name) {
-    
-  }
-
-  // Returns the total number of vampires that exist
-  get totalDescendents() {
-    
-  }
-
-  // Returns an array of all the vampires that were converted after 1980
-  get allMillennialVampires() {
-    
-  }
-
-  /** Stretch **/
+    /** Stretch **/
 
   // Returns the closest common ancestor of two vampires.
   // The closest common anscestor should be the more senior vampire if a direct ancestor is used.
@@ -68,21 +51,31 @@ class Vampire {
       return vampire;
     }
   }
-    /** Tree traversal methods **/
+   
+  /** Tree traversal methods **/
 
   // Returns the vampire object with that name, or null if no vampire exists with that name
   vampireWithName(name) {
     if (this.name === name) {
-      return this.vampire;
+      return this;
     }
     for (const offspringNode of this.offspring) {
-      offspringNode.vampireWithName(name);
+      if (offspringNode.vampireWithName(name)) {
+        return offspringNode.vampireWithName(name);
+      };
     }
+    return null;
   }
 
   // Returns the total number of vampires that exist
   get totalDescendents() {
+    let totalDescendents = this.numberOfOffspring; // 1
     
+    // Use depth first traversal to calculate the total employees
+    for (const offspringNode of this.offspring) {
+      totalDescendents += offspringNode.totalDescendents ;
+    }
+    return totalDescendents;
   }
 
   // Returns an array of all the vampires that were converted after 1980
@@ -90,10 +83,10 @@ class Vampire {
     let millennials = [];
 
     if (this.yearConverted > 1980) {
-      millennial.push(this);
+      millennials.push(this);
     }
-    for (const offspringNode of this.addOffspring) {
-      const millennialAfter = offspringNode.allMillennialVampires(); 
+    for (const offspringNode of this.offspring) {
+      const millennialAfter = offspringNode.allMillennialVampires; 
       millennials = millennials.concat(millennialAfter);
     }
     return millennials;
